@@ -33,7 +33,7 @@ export default {
           .post('api/v1/users/', formData)
           .then(response =>{
             console.log(response)
-            router.push('/')
+            router.push('/log-in')
           })
           .catch(error => {
             console.log(error)
