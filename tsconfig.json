@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
+    "outDir": "./dist",
     "strict": true,
     "jsx": "preserve",
     "moduleResolution": "node",
@@ -33,7 +34,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "electron/**/.ts*"
   ],
   "exclude": [
     "node_modules"
