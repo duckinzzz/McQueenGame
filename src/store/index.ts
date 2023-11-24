@@ -22,7 +22,12 @@ export default createStore({
         },
         setRefresh(state: { access: (string | null), refresh: (string|null) }, refresh): void {
             state.refresh = refresh
-
+        },
+        clearAccess(state: { access: (string | null), refresh: (string|null)}):void {
+            state.access = ''
+        },
+        clearRefresh(state: { access: (string | null), refresh: (string|null)}):void {
+            state.refresh = ''
         }
     },
     actions: {},

@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-
-    <span :src ="user_data">{{user_data}}</span>
+    <span v-if="userIsLoggedIn" >{{ user_data }}</span>
+    <button v-if="userIsLoggedIn" @click="logout">Log out</button>
   </div>
 </template>
 
@@ -12,9 +12,17 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'HomeView',
+  props: {
+    store: Object
+  },
   data(){
     return{
       user_data: '' as string
+    }
+  },
+  computed: {
+    userIsLoggedIn(): boolean {
+      return !!localStorage.getItem('access');
     }
   },
   mounted() {
@@ -31,6 +39,17 @@ export default defineComponent({
           .catch(error => {
             console.log(error)
           })
+    },
+    logout(): void {
+      localStorage.removeItem('access');
+      localStorage.removeItem('refresh');
+
+      if (this.$props.store) {
+        this.$props.store.commit('clearAccess');
+        this.$props.store.commit('clearRefresh');
+      }
+      this.user_data = '';
+      this.$router.push('/log-in');
     }
   }
 });

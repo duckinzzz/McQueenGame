@@ -3,6 +3,7 @@
     <router-link to="/">Home</router-link>
     |
     <router-link to="/about">About</router-link>
+    |
     <router-link to="/log-in">Log in</router-link>
     |
     <router-link to="/sign-up">Sign up</router-link>
@@ -28,7 +29,7 @@ export default {
   mounted() {
     setInterval(()=>{
       this.getAccess()
-    },5000)
+    },500)
 
   },
   methods: {
