@@ -12,29 +12,34 @@
 </template>
 <script>
 import axios from 'axios'
-
+import router from "@/router";
 export default {
   name: "LogIn",
-  data(){
-    return{
+  data() {
+    return {
       username: '',
       password: ''
     }
   },
-  methods:{
-    submitForm(e){
-      axios.defaults.headers.common['Authorization']= ''
+  methods: {
+    submitForm(e) {
+      axios.defaults.headers.common['Authorization'] = ''
       localStorage.removeItem("access")
       const formData = {
         username: this.username,
         password: this.password
       }
       axios
-          .post('api/v1/jwt/create/',formData)
-          .then(response =>{
+          .post('api/v1/jwt/create/', formData)
+          .then(response => {
             console.log(response)
+            const access = response.data.access
+            this.$store.commit("setAccess", access)
+            axios.defaults.headers.common['Authorization'] = "JWT " + access
+            localStorage.setItem("access",access)
+            router.push('/')
           })
-          .catch(error =>{
+          .catch(error => {
             console.log(error)
           })
     }
