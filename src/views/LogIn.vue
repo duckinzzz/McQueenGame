@@ -1,9 +1,9 @@
 <template>
   <div class="log-in-page">
     <h1>Log in</h1>
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm" >
       <label>Username:</label>
-      <input type="email" name="username" v-model="username"><br><br>
+      <input type="username" name="username" v-model="username"><br><br>
       <label>Password:</label>
       <input type="password" name="password" v-model="password"><br><br>
       <button type="submit">Log in</button>
