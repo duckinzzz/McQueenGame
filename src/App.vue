@@ -29,7 +29,7 @@ export default {
   mounted() {
     setInterval(()=>{
       this.getAccess()
-    },1000*3500)
+    },1000*60*4)
 
   },
   methods: {

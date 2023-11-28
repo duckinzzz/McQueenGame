@@ -1,6 +1,6 @@
 <template>
   <div class="log-in-page">
-    <h1>Log in</h1>
+    <h1>Авторизация</h1>
     <form @submit.prevent="submitForm" >
       <label>Username:</label>
       <input type="username" name="username" v-model="username"><br><br>
@@ -31,7 +31,6 @@ export default {
         username: this.username,
         password: this.password
       };
-
       axios.post('api/v1/jwt/create/', formData)
           .then(response => {
             console.log(response);
@@ -39,6 +38,7 @@ export default {
             const refresh = response.data.refresh;
             this.$store.commit("setAccess", access);
             this.$store.commit("setRefresh", refresh);
+
             axios.defaults.headers.common['Authorization'] = "JWT " + access;
             localStorage.setItem("access", access);
             localStorage.setItem("refresh", refresh);

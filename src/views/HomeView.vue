@@ -35,13 +35,18 @@ export default defineComponent({
           .get("api/v1/users/me")
           .then(response => {
             console.log(response)
-            this.user_data = response.data.username
+            if (response.data && response.data.username) {
+              this.user_data = response.data.username;
+            } else {
+              this.clearLocalStorage();
+            }
           })
           .catch(error => {
             console.log(error)
+            this.clearLocalStorage();
           })
     },
-    logout(): void {
+    clearLocalStorage(): void {
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
 
@@ -49,13 +54,15 @@ export default defineComponent({
         this.$props.store.commit('clearAccess');
         this.$props.store.commit('clearRefresh');
       }
+    },
+    logout(): void {
+      this.clearLocalStorage();
       this.user_data = '';
       this.$router.push('/log-in');
     }
   }
 });
 </script>
-
 <style scoped>
 * {
   margin: 0;

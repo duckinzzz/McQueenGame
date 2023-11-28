@@ -1,6 +1,6 @@
 <template>
   <div class="sign-up-page">
-    <h1>Sign up</h1>
+    <h1>Регистрация</h1>
     <form @submit.prevent="submitForm">
       <label>Username:</label>
       <input type="username" name="username" v-model="username"><br><br>
@@ -34,7 +34,6 @@ export default {
           .post('api/v1/users/', formData)
           .then(response => {
             console.log(response);
-            // Выполнение входа пользователя после успешной регистрации
             this.loginUserAfterSignUp(formData);
           })
           .catch(error => {
@@ -48,17 +47,12 @@ export default {
             const access = response.data.access;
             const refresh = response.data.refresh;
 
-            // Сохранение учетных данных в localStorage
             localStorage.setItem("access", access);
             localStorage.setItem("refresh", refresh);
 
-            // Опционально: сохранение учетных данных в хранилище Vuex
-            // this.$store.commit("setAccess", access);
-            // this.$store.commit("setRefresh", refresh);
 
             axios.defaults.headers.common['Authorization'] = "JWT " + access;
 
-            // Переход на главную страницу
             router.push('/');
           })
           .catch(error => {

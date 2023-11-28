@@ -4,6 +4,7 @@ export default createStore({
     state: {
         access: '',
         refresh: '',
+
     },
     getters: {},
     mutations: {
