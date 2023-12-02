@@ -1,11 +1,11 @@
 <template>
   <div class="log-in-page">
     <h1>Авторизация</h1>
-    <form @submit.prevent="submitForm" >
-      <label>Username:</label>
-      <input type="username" name="username" v-model="username"><br><br>
-      <label>Password:</label>
-      <input type="password" name="password" v-model="password"><br><br>
+    <form @submit.prevent="submitForm" class="login-form">
+      <label for="username">Username:</label>
+      <input type="username" name="username" v-model="username" id="username"><br><br>
+      <label for="password">Password:</label>
+      <input type="password" name="password" v-model="password" id="password"><br><br>
       <button type="submit">Log in</button>
     </form>
   </div>
@@ -52,3 +52,46 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.log-in-page {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-bottom: 100px;
+
+}
+
+.login-form {
+  display: inline-block;
+  border: 2px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="username"],
+input[type="password"],
+button {
+  display: block;
+  margin: 10px auto;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+</style>

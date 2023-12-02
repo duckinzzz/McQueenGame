@@ -1,20 +1,24 @@
 <template>
-  <nav>
-    <router-link to="/">Начать</router-link>
-    |
-    <router-link to="/about">Об игре</router-link>
-    |
-    <router-link to="/log-in">Вход</router-link>
-    |
-    <router-link to="/sign-up">Регистрация</router-link>
-  </nav>
-  <router-view/>
+  <div>
+    <nav v-if="showNav">
+      <router-link to="/">Начать</router-link> |
+      <router-link to="/log-in">Вход</router-link> |
+      <router-link to="/sign-up">Регистрация</router-link>
+    </nav>
+    <router-view/>
+  </div>
 </template>
+
 <script>
 import axios from "axios";
 
 export default {
   name: 'App',
+  computed: {
+    showNav() {
+      return this.$route.path !== '/game';
+    }
+  },
   beforeCreate() {
     console.log(this.$store)
     this.$store.commit("initializeStore")
@@ -63,11 +67,23 @@ export default {
 }
 
 nav {
-  padding: 30px;
-
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: #bd5454; /* Цвет фона панели навигации */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 10px 20px;
+  left: 0;
+  right: 0;
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #fff; /* Цвет текста */
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 
     &.router-link-exact-active {
       color: #42b983;
@@ -75,5 +91,3 @@ nav {
   }
 }
 </style>
-<script setup lang="ts">
-</script>

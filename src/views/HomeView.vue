@@ -84,6 +84,7 @@ export default defineComponent({
 
 .actions {
   margin-top: 20px;
+  margin-bottom: 350px;
 }
 
 button {
