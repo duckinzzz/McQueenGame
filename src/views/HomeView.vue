@@ -1,3 +1,4 @@
+
 <template>
   <div class="home">
     <div class="drive-to-survive">
@@ -182,7 +183,7 @@ a{
   border: 3px solid #dac892;
   color: rgba(14, 13, 8, 0.97);
   background-color: #f1e6be;
-  font-size: 18px;
+  font-size: 24px;
   font-family: 'Montserrat', sans-serif;
   transition: .2s;
   justify-content: center;
@@ -223,6 +224,7 @@ a{
   transition: .2s;
 
 }
+
 .double-border-button:after {
   content: "";
   position: absolute;
