@@ -1,13 +1,16 @@
-
 <template>
   <div class="home">
+    <div class="drive-to-survive">
+      <h1>Drive to survive!</h1>
+    </div>
+
     <div class="username" v-if="user_data">
-      <h2>{{ user_data }}</h2>
+      <h2>С возвращением, {{ user_data }}!</h2>
     </div>
     <div class="actions" v-if="user_data">
-      <button class="action-button" @click="logout">Выйти</button>
-      <router-link class="action-button" :to="{ name: 'Records' }">Рекорды</router-link>
-      <router-link class="action-button" :to="{ name: 'Game' }">Играть</router-link>
+      <router-link class="double-border-button-start" :to="{ name: 'Game' }">Играть</router-link>
+      <router-link class="double-border-button" :to="{ name: 'Records' }">Рекорды</router-link>
+      <router-link class="double-border-button" to="/log-in" @click="logout">Выйти</router-link>
     </div>
   </div>
 </template>
@@ -71,7 +74,7 @@ export default defineComponent({
 }
 
 .home {
-  font-family: Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
@@ -85,7 +88,11 @@ export default defineComponent({
 .actions {
   margin-top: 20px;
   margin-bottom: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 
 button {
   padding: 8px 16px;
@@ -96,6 +103,7 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 button:hover {
@@ -114,10 +122,33 @@ router-link:hover {
 a{
   text-decoration:none
 }
+.action-button-start {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 2px;
+  background-color: #3498db;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+  text-decoration: none;
+  width: 160px;
+  height: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.action-button-start:hover {
+  background-color: #2980b9;
+}
+
 .action-button {
   padding: 8px 16px;
   border: none;
-  border-radius: 4px;
+  border-radius: 2px;
   background-color: #3498db;
   color: #fff;
   cursor: pointer;
@@ -130,9 +161,84 @@ a{
   justify-content: center;
   align-items: center;
   font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 10px;
 }
 
 .action-button:hover {
   background-color: #2980b9;
+}
+.drive-to-survive{
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+.double-border-button-start{
+  text-decoration: none;
+  display: inline-flex;
+  margin: 10px 20px;
+  padding: 20px 60px;
+  border-radius: 2px;
+  position: relative;
+  border: 3px solid #dac892;
+  color: rgba(14, 13, 8, 0.97);
+  background-color: #f1e6be;
+  font-size: 18px;
+  font-family: 'Montserrat', sans-serif;
+  transition: .2s;
+  justify-content: center;
+
+}
+.double-border-button-start:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border: 2px solid rgba(0, 0, 0, 0);
+  transition: .4s;
+}
+.double-border-button-start:hover:after {
+  border-color: #dac892;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+}
+.double-border-button{
+  justify-content: center;
+  width: 50%;
+  text-decoration: none;
+  display: inline-flex;
+  margin: 10px 20px;
+  padding: 10px 30px;
+  border-radius: 2px;
+  position: relative;
+  border: 3px solid #dac892;
+  color: rgba(14, 13, 8, 0.97);
+  background-color: #f1e6be;
+  font-size: 18px;
+  font-family: 'Montserrat', sans-serif;
+  transition: .2s;
+
+}
+.double-border-button:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border: 2px solid rgba(0, 0, 0, 0);
+  transition: .4s;
+}
+.double-border-button:hover:after {
+  border-color: #dac892;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
 }
 </style>

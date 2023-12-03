@@ -15,19 +15,26 @@
         alt="Your Image Alt Text"
         :style="{ transform: `translate(${posX}px, ${posY}px)` }"
     />
+    <Modal :showModal="gameOver" :score="finalScore" @restart="resetGame" @exit="exitGame"/>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onMounted, onUnmounted, computed} from 'vue';
+import {defineComponent, ref, Ref, onMounted, onUnmounted, computed} from 'vue';
+import Modal from './modalView.vue';
 
 export default defineComponent({
+  components: {
+    Modal
+  },
   setup() {
     const posX = ref(330);
     const posY = ref(400);
     const step = 20;
     let requestId: number | null = null;
     let isMoving = false;
+    const gameOver: Ref<boolean> = ref(false);
+    const finalScore: Ref<number> = ref(0);
     const roadRef = ref<HTMLDivElement | null>(null);
     const score = ref(0);
     const roadSpeed = ref(20);
@@ -35,8 +42,8 @@ export default defineComponent({
     const obstacle2 = document.getElementById('obstacle2')!;
     const obstacle3 = document.getElementById('obstacle3')!;
     const obstacle4 = document.getElementById('obstacle4')!;
-    let mcqueen: HTMLElement | null = null; // Элемент машины
-    let obstacles: HTMLElement[] = []; // Массив элементов препятствий
+    let mcqueen: HTMLElement | null = null;
+    let obstacles: HTMLElement[] = [];
 
     const initElements = () => {
       mcqueen = document.getElementById('mcqueen');
@@ -71,19 +78,49 @@ export default defineComponent({
 
 
     const endGame = () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
       if (requestId) {
         window.cancelAnimationFrame(requestId);
         requestId = null;
       }
-      alert('Игра окончена!'); // Можно заменить на другое действие при окончании игры
+      finalScore.value = score.value;
+      gameOver.value = true;
+
+      const road = document.getElementById('road');
+      if (road) {
+        road.style.animationPlayState = 'paused';
+      }
+
+      obstacles.forEach((obstacle) => {
+        obstacle.style.animationPlayState = 'paused';
+      });
+
+      mcqueen?.style.setProperty('transition', 'none');
+    };
+    const resetGame = (reload: any = true) => {
+      gameOver.value = false;
+      score.value = 0;
+      if (obstacle1 && obstacle2 && obstacle3 && obstacle4) {
+        obstacle1.style.left = '600px';
+        obstacle2.style.left = '400px';
+        obstacle3.style.left = '200px';
+        obstacle4.style.left = '0px';
+      }
+      obstacles.forEach((obstacle) => {
+        obstacle.style.animationPlayState = 'running';
+      });
+      if (reload) {
+        window.location.reload()
+      }
+    };
+    const exitGame = () => {
+      resetGame(false)
+
     };
 
 
     const increaseSpeed = () => {
       setInterval(() => {
-        if (roadSpeed.value <= 40) {
+        if (!gameOver.value && roadSpeed.value <= 40) {
           roadSpeed.value += 2;
         }
       }, 10000);
@@ -133,7 +170,9 @@ export default defineComponent({
 
     const startTimer = () => {
       setInterval(() => {
-        score.value += 1;
+        if (!gameOver.value) {
+          score.value += 1;
+        }
       }, 100);
     };
 
@@ -147,8 +186,8 @@ export default defineComponent({
 
     const moveRight = () => {
       if (isMoving) {
-        const maxPosX = maxX.value; // Максимальная позиция по оси X
-        const newPosX = Math.min(posX.value + step, maxPosX); // Новая позиция
+        const maxPosX = maxX.value;
+        const newPosX = Math.min(posX.value + step, maxPosX);
 
         posX.value = newPosX;
 
@@ -208,10 +247,10 @@ export default defineComponent({
 
     });
 
-    return {posX, posY, roadRef, score};
+    return {posX, posY, roadRef, score, gameOver, finalScore, resetGame, exitGame};
   }
 });
-</script >
+</script>
 
 <style>
 
@@ -220,9 +259,10 @@ export default defineComponent({
   padding: 0;
 }
 
-div.game{
+div.game {
   text-align: left;
 }
+
 #mcqueen {
   position: absolute;
   top: 15vh;
