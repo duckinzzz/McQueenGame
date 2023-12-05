@@ -4,11 +4,12 @@ export default createStore({
     state: {
         access: '',
         refresh: '',
+        username: ''
 
     },
     getters: {},
     mutations: {
-        initializeStore(state: { access: (string | null), refresh: (string | null) }): void {
+        initializeStore(state: { access: (string | null), refresh: (string | null), username: (string | null) }): void {
             if (localStorage.getItem("access")) {
                 state.access = localStorage.getItem("access")
                 state.refresh = localStorage.getItem("refresh")
@@ -18,16 +19,38 @@ export default createStore({
             }
 
         },
-        setAccess(state: { access: (string | null), refresh: (string|null) }, access): void {
+        setAccess(state: {
+            access: (string | null),
+            refresh: (string | null),
+            username: (string | null)
+        }, access): void {
             state.access = access
         },
-        setRefresh(state: { access: (string | null), refresh: (string|null) }, refresh): void {
+        setUserName(state: {
+            access: (string | null),
+            refresh: (string | null),
+            username: (string | null)
+        }, username): void {
+            state.username = username;
+        },
+        clearUserName(state: {
+            access: (string | null),
+            refresh: (string | null),
+            username: (string | null)
+        }, access): void {
+            state.username = '';
+        },
+        setRefresh(state: {
+            access: (string | null),
+            refresh: (string | null),
+            username: (string | null)
+        }, refresh): void {
             state.refresh = refresh
         },
-        clearAccess(state: { access: (string | null), refresh: (string|null)}):void {
+        clearAccess(state: { access: (string | null), refresh: (string | null), username: (string | null) }): void {
             state.access = ''
         },
-        clearRefresh(state: { access: (string | null), refresh: (string|null)}):void {
+        clearRefresh(state: { access: (string | null), refresh: (string | null), username: (string | null) }): void {
             state.refresh = ''
         }
     },
