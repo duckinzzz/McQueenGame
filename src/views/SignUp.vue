@@ -45,12 +45,14 @@ export default {
             console.log(response);
             const access = response.data.access;
             const refresh = response.data.refresh;
-
-            localStorage.setItem("access", access);
-            localStorage.setItem("refresh", refresh);
-
+            const username = this.username
+            this.$store.commit("setUserName", username);
+            this.$store.commit("setAccess", access);
+            this.$store.commit("setRefresh", refresh);
 
             axios.defaults.headers.common['Authorization'] = "JWT " + access;
+            localStorage.setItem("access", access);
+            localStorage.setItem("refresh", refresh);
 
             router.push('/');
           })
