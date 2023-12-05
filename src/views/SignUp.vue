@@ -9,6 +9,7 @@
       <label for="confirmPassword">Подтвердите пароль:</label>
       <input type="password" name="confirmPassword" v-model="confirmPassword" id="confirmPassword"><br><br>
       <p v-if="unconfirmedPassword" style="color: red; font-family: 'Montserrat', sans-serif; font-size: 80%">{{ unconfirmedPassword }}</p>
+      <p v-if="error" style="color: red; font-family: 'Montserrat', sans-serif; font-size: 80%">{{ error }}</p>
       <button class="double-border-button" type="submit">Зарегистрироваться</button>
     </form>
   </div>
@@ -24,7 +25,8 @@ export default {
       username: '',
       password: '',
       confirmPassword: '',
-      unconfirmedPassword: ''
+      unconfirmedPassword: '',
+      error: ''
     }
   },
   methods: {
@@ -46,6 +48,7 @@ export default {
           })
           .catch(error => {
             console.log(error);
+            this.error = 'Пользователь с таким именем уже существует';
           });
     },
     loginUserAfterSignUp(formData) {
