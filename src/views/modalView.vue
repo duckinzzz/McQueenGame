@@ -1,17 +1,17 @@
 <template>
   <div class="modal-outer" v-if="showModal">
     <div class="modal-content">
-      <h2>Рекорд: {{ score }}</h2>
-      <div class="buttons">
-        <router-link @click="restartGame" to="/game">Повторить</router-link>
-        <router-link @click="exitGame" to="/">Выйти</router-link>
+      <h2>Счет: {{ score }}</h2>
+      <div class="actions">
+        <router-link @click="restartGame" to="/game" class="double-border-button-start">Повторить</router-link>
+        <router-link @click="exitGame" to="/" class="double-border-button">Выйти</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 
 export default defineComponent({
   props: {
@@ -50,39 +50,42 @@ export default defineComponent({
 }
 
 .modal-content {
-  background-color: white;
+  background-color: #f1e6be;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   text-align: center;
+  font-family: 'Montserrat', sans-serif;
 }
 
 h2 {
   margin-bottom: 20px;
+  font-size: 24px;
 }
 
-.buttons {
+.actions {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
 }
 
-button,
-a {
-  display: inline-block;
-  padding: 10px 20px;
-  margin: 0 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.double-border-button-start,
+.double-border-button {
+  padding: 20px 60px;
+  border-radius: 2px;
+  border: 3px solid #dac892;
+  color: rgba(14, 13, 8, 0.97);
+  background-color: #f1e6be;
+  font-size: 18px;
+  font-family: 'Montserrat', sans-serif;
+  transition: .2s;
   text-decoration: none;
-  color: white;
-  background-color: #007bff;
-  transition: background-color 0.3s ease;
+  margin: 0 20px;
 }
 
-button:hover,
-a:hover {
-  background-color: #0056b3;
+.double-border-button-start:hover,
+.double-border-button:hover {
+  border-color: #dac892;
+  color: #2980b9;
 }
-
 </style>
