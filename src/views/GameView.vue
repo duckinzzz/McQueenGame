@@ -1,10 +1,10 @@
 <template>
   <div class="game">
     <div>
-      <div id="obstacle1"><img id="obtimg1" class="obstacle" src="" alt=""></div>
-      <div id="obstacle2"><img id="obtimg2" class="obstacle" src="" alt=""></div>
-      <div id="obstacle3"><img id="obtimg3" class="obstacle" src="" alt=""></div>
-      <div id="obstacle4"><img id="obtimg4" class="obstacle" src="" alt=""></div>
+      <div id="obstacle1"><img id="obtimg1" class="obstacle" src="../../public/obstacle1.png" alt=""></div>
+      <div id="obstacle2"><img id="obtimg2" class="obstacle" src="../../public/obstacle2.png" alt=""></div>
+      <div id="obstacle3"><img id="obtimg3" class="obstacle" src="../../public/obstacle3.png" alt=""></div>
+      <div id="obstacle4"><img id="obtimg4" class="obstacle" src="../../public/obstacle4.png" alt=""></div>
     </div>
     <p class="score">Очки: {{ score }}</p>
     <div id="road" ref="roadRef">
@@ -359,12 +359,11 @@ body {
 
 
 #obstacle1 {
-  background: seagreen;
   display: grid;
   place-items: center;
   position: relative;
   width: 100px;
-  height: 100px;
+  height: 200px;
   left: 600px;
   z-index: 1001;
   animation: obstcl1 infinite linear 3s;
@@ -372,12 +371,11 @@ body {
 }
 
 #obstacle2 {
-  background: fuchsia;
   display: grid;
   place-items: center;
   position: relative;
   width: 100px;
-  height: 100px;
+  height: 250px;
   left: 400px;
   z-index: 1001;
   animation: obstcl2 infinite linear 4s;
@@ -385,12 +383,11 @@ body {
 }
 
 #obstacle3 {
-  background: aqua;
   display: grid;
   place-items: center;
   position: relative;
   width: 100px;
-  height: 100px;
+  height: 200px;
   left: 200px;
   z-index: 1001;
   animation: obstcl3 infinite linear 6s;
@@ -398,12 +395,11 @@ body {
 }
 
 #obstacle4 {
-  background: blue;
   display: grid;
   place-items: center;
   position: relative;
   width: 100px;
-  height: 100px;
+  height: 144px;
   left: 0px;
   z-index: 100;
   animation: obstcl4 infinite linear 2s;
@@ -413,9 +409,7 @@ body {
 @keyframes obstcl1 {
   0% {
     top: -30vh;
-
   }
-
   100% {
     top: 100vh;
   }
@@ -423,10 +417,8 @@ body {
 
 @keyframes obstcl2 {
   0% {
-    top: -50vh;
-
+    top: -60vh;
   }
-
   100% {
     top: 100vh;
   }
@@ -434,10 +426,8 @@ body {
 
 @keyframes obstcl3 {
   0% {
-    top: -60vh;
-
+    top: -90vh;
   }
-
   100% {
     top: 100vh;
   }
@@ -445,10 +435,8 @@ body {
 
 @keyframes obstcl4 {
   0% {
-    top: -80vh;
-
+    top: -120vh;
   }
-
   100% {
     top: 100vh;
   }
