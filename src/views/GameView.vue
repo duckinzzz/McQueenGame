@@ -22,12 +22,15 @@
 <script lang="ts">
 import {defineComponent, ref, Ref, onMounted, onUnmounted, computed} from 'vue';
 import Modal from './modalView.vue';
+import axios from "axios";
+import {useStore} from 'vuex';
 
 export default defineComponent({
   components: {
     Modal
   },
   setup() {
+    const store = useStore();
     const posX = ref(330);
     const posY = ref(400);
     const step = 20;
@@ -44,7 +47,8 @@ export default defineComponent({
     const obstacle4 = document.getElementById('obstacle4')!;
     let mcqueen: HTMLElement | null = null;
     let obstacles: HTMLElement[] = [];
-
+    let sended = true;
+    let username = store.state.username;
     const initElements = () => {
       mcqueen = document.getElementById('mcqueen');
       obstacles = [
@@ -93,13 +97,51 @@ export default defineComponent({
         road.style.animationPlayState = 'paused';
       }
 
+
       obstacles.forEach((obstacle) => {
         obstacle.style.animationPlayState = 'paused';
       });
 
       mcqueen?.style.setProperty('transition', 'none');
+      if (localStorage.getItem('username')) {
+        username = localStorage.getItem('username')
+      }
+      const recordData = {
+        "user": {
+          "username": username
+        },
+        "record": finalScore.value
+      };
+
+      if (sended) {
+        sended = false
+        axios.get(`http://127.0.0.1:8000/api/v1/update_record/${username}/`)
+            .then(response => {
+              if (response.data.record < finalScore.value) {
+                const new_record = {
+
+                  "record": finalScore.value
+                }
+                axios.put(`http://127.0.0.1:8000/api/v1/update_record/${username}/`, new_record)
+              }
+              console.log(store)
+              console.log(response.data)
+            })
+            .catch(error => {
+              axios.post('/api/v1/records/', recordData)
+                  .then(response => {
+                    console.log('Рекорд успешно обновлен', response.data);
+                  })
+                  .catch(error => {
+                    console.log(error)
+                  });
+            });
+
+      }
     };
     const resetGame = (reload: any = true) => {
+      localStorage.setItem('username', username);
+      username = localStorage.getItem('username');
       gameOver.value = false;
       score.value = 0;
       if (obstacle1 && obstacle2 && obstacle3 && obstacle4) {
@@ -117,6 +159,7 @@ export default defineComponent({
     };
     const exitGame = () => {
       resetGame(false)
+      localStorage.removeItem('username')
 
     };
 
