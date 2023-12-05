@@ -2,11 +2,12 @@
   <div class="log-in-page">
     <h1>Авторизация</h1>
     <form @submit.prevent="submitForm" class="login-form">
-      <label for="username">Username:</label>
+      <label for="username">Имя пользователя:</label>
       <input type="username" name="username" v-model="username" id="username"><br><br>
-      <label for="password">Password:</label>
+      <label for="password">Пароль:</label>
       <input type="password" name="password" v-model="password" id="password"><br><br>
-      <button type="submit">Log in</button>
+      <p v-if="error" style="color: red; font-size: 80%">{{ error }}</p>
+      <button class="double-border-button">Вход</button>
     </form>
   </div>
 </template>
@@ -20,7 +21,8 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      error: ''
     }
   },
   methods: {
@@ -50,6 +52,7 @@ export default {
           })
           .catch(error => {
             console.error(error);
+            this.error = 'Логин или пароль введены неверно';
           });
     }
   }
@@ -58,7 +61,7 @@ export default {
 
 <style scoped>
 .log-in-page {
-  font-family: Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   text-align: center;
   margin-bottom: 100px;
 
@@ -66,10 +69,11 @@ export default {
 
 .login-form {
   display: inline-block;
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 2px;
   background-color: #f9f9f9;
+  margin-top: 20px;
 }
 
 label {
@@ -87,14 +91,42 @@ button {
   width: 200px;
 }
 
-button {
-  background-color: #3498db;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+
+.double-border-button {
+  justify-content: center;
+  width: 50%;
+  text-decoration: none;
+  display: inline-flex;
+  margin: 5px 10px;
+  padding: 10px 30px;
+  border-radius: 2px;
+  position: relative;
+  border: 3px solid #dac892;
+  color: rgba(14, 13, 8, 0.97);
+  background-color: #f1e6be;
+  font-size: 18px;
+  font-family: 'Montserrat', sans-serif;
+  transition: .2s;
+
 }
 
-button:hover {
-  background-color: #2980b9;
+.double-border-button:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border: 2px solid rgba(0, 0, 0, 0);
+  transition: .4s;
+}
+
+.double-border-button:hover:after {
+  border-color: #dac892;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
 }
 </style>
