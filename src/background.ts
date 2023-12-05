@@ -9,7 +9,9 @@ function createWindow() {
     },
   });
 
-  win.loadURL('https://inquisitive-sunshine-8402ec.netlify.app'); // Замените 'index.html' на ваш файл HTML
+  win.loadURL('https://inquisitive-sunshine-8402ec.netlify.app');
+  win.maximize();
+  win.removeMenu();
 }
 
 app.whenReady().then(() => {
