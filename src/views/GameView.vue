@@ -12,9 +12,13 @@
     <img
         id="mcqueen"
         src="../assets/car.png"
-        alt="Your Image Alt Text"
         :style="{ transform: `translate(${posX}px, ${posY}px)` }"
     />
+    <audio
+        ref="backgroundMusic"
+        src="/song.mp3"
+        loop
+        autoplay></audio>
     <Modal :showModal="gameOver" :score="finalScore" @restart="resetGame" @exit="exitGame"/>
   </div>
 </template>
@@ -49,6 +53,24 @@ export default defineComponent({
     let obstacles: HTMLElement[] = [];
     let sended = true;
     let username = store.state.username;
+    const backgroundMusic = ref<HTMLAudioElement | null>(null); // ссылка на элемент аудио
+
+    const startBackgroundMusic = () => {
+      const audio = backgroundMusic.value;
+      if (audio) {
+        audio.play();
+      }
+    };
+
+    const stopBackgroundMusic = () => {
+      const audio = backgroundMusic.value;
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+
+
     const initElements = () => {
       mcqueen = document.getElementById('mcqueen');
       obstacles = [
@@ -83,8 +105,8 @@ export default defineComponent({
       });
     };
 
-
     const endGame = () => {
+      stopBackgroundMusic()
       if (requestId) {
         window.cancelAnimationFrame(requestId);
         requestId = null;
@@ -162,7 +184,6 @@ export default defineComponent({
       localStorage.removeItem('username')
 
     };
-
 
     const increaseSpeed = () => {
       setInterval(() => {
@@ -250,8 +271,6 @@ export default defineComponent({
         requestId = null;
       }
     };
-
-
     onMounted(() => {
       window.addEventListener('keydown', handleKeyDown);
       window.addEventListener('keyup', handleKeyUp);
@@ -271,8 +290,14 @@ export default defineComponent({
 
     });
 
-    return {posX, posY, roadRef, score, gameOver, finalScore, resetGame, exitGame};
-  }
+    return {
+      posX, posY, roadRef, score, gameOver, finalScore, resetGame, exitGame,
+      backgroundMusic,
+      startBackgroundMusic,
+      stopBackgroundMusic,
+    };
+  },
+
 });
 </script>
 
@@ -307,7 +332,7 @@ body {
   height: 1200vh;
   width: 50vw;
   position: relative;
-  top: -80vh; /* Начальное положение дороги */
+  top: -80vh;
   z-index: -9;
   animation: roadanimation infinite linear 10s;
 }
