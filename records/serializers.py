@@ -11,8 +11,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class RecordSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Record
-        fields = ('user','record')
+        fields = ('user', 'record')
+
+    def create(self, validated_data):
+        username = self.context['request'].data['user']['username']
+        user_instance = User.objects.get(username=username)
+        record = Record.objects.create(user=user_instance, **validated_data)
+
+        return record
