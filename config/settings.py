@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:8080','http://localhost:8081', 'http://127.0.0.1:8000']
+CORS_ALLOWED_ORIGINS = ['http://localhost:8080','http://localhost:8081', 'http://127.0.0.1:8000','https://inquisitive-sunshine-8402ec.netlify.app']
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
